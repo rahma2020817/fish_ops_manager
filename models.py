@@ -1,5 +1,5 @@
 from database import Base
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Date, Float
 
 
 class Users(Base):
@@ -30,9 +30,12 @@ class Products(Base):
     __tablename__ = 'products'
 
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String)
-    description = Column(String)
-    priority = Column(Integer)
-    complete = Column(Boolean, default=False)
+
+    date_mareyage = Column(Date)
+    lieu_mareyage = Column(String)
+    date_reception = Column(Date)
+    type_produit = Column(String)
+    taille_moyenne = Column(Float)
+    temp_moyenne = Column(Float)
     owner_id = Column(Integer, ForeignKey("users.id"))
 
