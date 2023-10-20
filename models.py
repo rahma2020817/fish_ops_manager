@@ -27,7 +27,7 @@ class Todos(Base):
 
 
 class Products(Base):
-    __tablename__ = 'todos'
+    __tablename__ = 'products'
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String)
