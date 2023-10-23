@@ -15,7 +15,7 @@ router = APIRouter(
     tags=['auth']
 )
 
-SECRET_KEY = '197b2c37c391bed93fe80344fe73b806947a65e36206e05a1a23c2fa12702fe3'
+SECRET_KEY = 'c49ba5547e13c86a4e7ea792c0890b731e0a7554c078dccaa9acced6053a1f2a'
 ALGORITHM = 'HS256'
 
 bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
@@ -102,7 +102,7 @@ async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm,
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail='Could not validate user.')
-    token = create_access_token(user.username, user.id, user.role, timedelta(minutes=20))
+    token = create_access_token(user.username, user.id, user.role, timedelta(minutes=30))
 
     return {'access_token': token, 'token_type': 'bearer'}
 
