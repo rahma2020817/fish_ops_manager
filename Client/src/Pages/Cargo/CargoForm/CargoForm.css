@@ -1,0 +1,50 @@
+/* General form styles */
+.cargo-form-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.cargo-form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cargo-form-container input,
+.cargo-form-container button {
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.cargo-form-container input:focus,
+.cargo-form-container button:focus {
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Button specific styles */
+.cargo-form-container button {
+    background-color: #0056b3;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.cargo-form-container button:hover {
+    background-color: #004494;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .cargo-form-container {
+        padding: 1rem;
+    }
+}

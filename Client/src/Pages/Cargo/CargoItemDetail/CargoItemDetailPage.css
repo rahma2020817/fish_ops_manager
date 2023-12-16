@@ -1,0 +1,39 @@
+.cargo-item-detail-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cargo-item-detail-container h1, .cargo-item-detail-container h2 {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .details-block {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+  
+  .details-block p {
+    margin: 10px 0;
+    line-height: 1.6;
+  }
+  
+  /* Add responsiveness */
+  @media (max-width: 768px) {
+    .cargo-item-detail-container {
+      padding: 10px;
+    }
+  
+    .details-block {
+      padding: 10px;
+    }
+  }
+  
