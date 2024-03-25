@@ -78,15 +78,15 @@ function Login() {
     <div className=" bg-gray-100 h-screen w-screen">
       <div className="flex flex-wrap justify-center m-auto items-center  bg-white   w-3/4 h-auto shadows">
         <div className="w-full  p-10  sm:w-1/2">
-          <h1 className="font-extrabold text-transparent text-6xl bg-clip-text bg-gradient-to-r from-blue-500 to-black">
-            Recite
+          <h1 className="font-extrabold text-transparent text-center text-6xl bg-clip-text bg-gradient-to-r from-blue-500 to-black">
+            <img
+                className="m-auto mt-4"
+                width={200}
+                src="src/assets/icons/logo1.webp"
+                alt=""
+            />
+            Dianel Software
           </h1>
-          <img
-            className="m-auto mt-4"
-            width={200}
-            src="https://www.creativefabrica.com/wp-content/uploads/2020/09/21/Food-Logo-Graphics-5583096-1.jpg"
-            alt=""
-          />
           <div className=" w-full">
             <form
               className="form-control w-full m-2"
@@ -183,7 +183,7 @@ function Login() {
         <div className="w-1/8 h-screen hidden shadows sm:block">
           <img
             className="h-screen"
-            src="https://sweetpeasandsaffron.com/wp-content/uploads/2021/06/30-min-dinners-HERO.jpg"
+            src="src/assets/bg.png"
             alt=""
           />
         </div>

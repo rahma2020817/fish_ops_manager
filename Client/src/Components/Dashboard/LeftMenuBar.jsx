@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 
 function LeftMenuBar() {
   const navigate = useNavigate();
-  const [title, setTitle] = useState("RECIPE");
+  const [title, setTitle] = useState("DIANNEL SOFTWARE");
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -18,14 +18,15 @@ function LeftMenuBar() {
   return (
     <div className="flex flex-col">
       <div>
+        <br></br>
         <img
-          className=""
-          width={200}
-          src="https://www.creativefabrica.com/wp-content/uploads/2020/09/21/Food-Logo-Graphics-5583096-1.jpg"
+          className="m-auto"
+          width={100}
+          src="src/assets/icons/logo1.webp"
         />
       </div>
       <div className="w-full bg-white flex items-center justify-center">
-        <h2 className="text-4xl font-bold">
+        <h2 className="text-4xl text-center font-bold">
           {title.substr(0, currentIndex + 1)}
         </h2>
       </div>

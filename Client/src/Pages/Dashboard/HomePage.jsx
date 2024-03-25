@@ -21,7 +21,7 @@ function HomePage() {
           <TopNavigationBar />
           {/* ## USING CONDITIONAL RENDERING HERE TO DIFFRENTIATE 1ST TIME USER AND WELL SETUP USER */}
           <>
-            <h1 h1 className="heading1 ml-12 mb-2 mt-2 text-transparent text-3xl sm:text-5xl bg-clip-text bg-gradient-to-r from-blue-500 to-black ">WELCOME TO RECITE</h1>
+            <h1 h1 className="heading1 ml-12 mb-2 mt-2 text-transparent text-3xl sm:text-5xl bg-clip-text bg-gradient-to-r from-blue-500 to-black ">WELCOME TO DIANNEL</h1>
 
 
             {/* Ajouter le composant ChatBox ici */}
