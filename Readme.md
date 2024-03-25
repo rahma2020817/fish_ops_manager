@@ -1,11 +1,21 @@
 # create virtual envs
 
+## Install dependancies
+apt install python3.11-venv
+apt install python3-dev
+
 ## Create a virtual environment named 'env'
 python3 -m venv env
 
 ## Activate the virtual environment
-env\Scripts\activate
+source env/bin/activate
 
+## Install poetry
+pip3 install poetry
+poetry add requests
+
+## run the server
+uvicorn main:app --reload
 
 # Git commands 
 git rm -r --cached . 
