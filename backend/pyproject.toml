@@ -7,14 +7,14 @@ readme = "README.md"
 packages = [{include = "fish_ops_manager"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
-fastapi = "^0.104.0"
+python = "^3.9"
+
 uvicorn = "^0.23.2"
 sqlalchemy = "^2.0.22"
 alembic = "^1.12.0"
-passlib = "^1.7.4"
+
 jose = "^1.0.0"
-python-multipart = "^0.0.6"
+
 python-jose = {extras = ["cryptogrphy"], version = "^3.3.0"}
 
 [build-system]
