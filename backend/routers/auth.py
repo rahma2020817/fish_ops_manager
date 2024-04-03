@@ -109,7 +109,9 @@ async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm,
 
 
 
-
+@router.get("/api")
+async def root():
+    return {"message": "Dianel Application"}
 
 
 
