@@ -1,0 +1,140 @@
+# FastAPI Project
+
+This is a FastAPI project template to get you started with building APIs using FastAPI.
+
+## Prerequisites
+
+- Python 3.7+
+- pip (Python package installer)
+
+## Setup Instructions
+
+Follow these steps to set up and run the project.
+
+### 1. Clone the repository
+
+```sh
+git clone https://github.com/yourusername/your-repo-name.git
+cd your-repo-name
+```
+
+### 2. Create a Virtual Environment
+
+Next, create a virtual environment to manage the project dependencies. Run the following command:
+
+```sh
+python -m venv venv
+```
+
+Activate the virtual environment:
+
+- On Windows, use:
+
+    ```sh
+    .\venv\Scripts\activate
+    ```
+
+- On macOS and Linux, use:
+
+    ```sh
+    source venv/bin/activate
+    ```
+
+### 3. Install Dependencies
+
+Install the required packages from the `requirements.txt` file by running the following command:
+
+```sh
+pip install -r requirements.txt
+```
+
+### 4. Set Environment Variables
+
+Create a `.env` file in the root of your project directory and add your environment variables. For example:
+
+```plaintext
+DATABASE_URL=sqlite:///./test.db
+SECRET_KEY=your_secret_key
+DEBUG=True
+```
+
+These variables can be accessed in your FastAPI application using the `python-dotenv` package or `pydantic` settings.
+
+### 5. Run the Application
+
+Use Uvicorn to run the FastAPI application with the following command:
+
+```sh
+uvicorn app.main:app --reload
+```
+
+- `app.main:app` refers to the `app` instance in the `main.py` file inside the `app` directory.
+- The `--reload` flag makes the server restart automatically after code changes, which is useful during development.
+
+## Project Structure
+
+Here's a basic structure for your FastAPI project:
+
+```
+your-repo-name/
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   └── ...
+├── venv/
+├── .env
+├── requirements.txt
+└── README.md
+```
+
+## Example FastAPI Application
+
+Here is a simple example of what your `app/main.py` might look like:
+
+```python
+from fastapi import FastAPI
+import uvicorn
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=8000)
+```
+
+## Additional Commands
+
+### Deactivate the Virtual Environment
+
+To deactivate the virtual environment, use the following command:
+
+```sh
+deactivate
+```
+
+### Upgrade pip
+
+To upgrade pip, use the following command:
+
+```sh
+pip install --upgrade pip
+```
+
+
+
+### Build the Docker image:
+
+```bash
+docker build -t fastapi-nginx .
+```
+
+### Run the container:
+
+```bash
+docker run -p 80:80 fastapi-nginx
+```
+
+

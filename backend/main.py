@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import models
 from database import engine
-from routers import auth, todos, admin, users, fish_details
+from routers import auth, admin, users, cargaison, items, numaclature
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -19,7 +19,8 @@ app.add_middleware(
 models.Base.metadata.create_all(bind=engine)
 
 app.include_router(auth.router)
-# app.include_router(todos.router)
+app.include_router(cargaison.router)
 app.include_router(admin.router)
 app.include_router(users.router)
-app.include_router(fish_details.router)
+app.include_router(items.router)
+app.include_router(numaclature.router)

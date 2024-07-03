@@ -1,0 +1,17 @@
+{
+    "sqltools.useNodeRuntime": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "dianel",
+            "database": "${workspaceFolder:fish_ops_manager}/backend/todosapp.db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:fish_ops_manager}/backend/identifier.sqlite",
+            "name": "dianel"
+        }
+    ]
+}
