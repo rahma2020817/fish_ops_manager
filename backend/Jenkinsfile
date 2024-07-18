@@ -9,7 +9,6 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Construire l'image Docker et taguer avec BUILD_NUMBER
                     sh "docker build -t ${DOCKER_IMAGE} ./backend/"
                 }
             }
@@ -19,8 +18,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                        sh "docker tag ${DOCKER_IMAGE} beddi006/${DOCKER_IMAGE}"
-                        sh "docker push ${DOCKER_IMAGE}"
+                        sh "docker tag ${DOCKER_IMAGE} beddi006/backend:${env.BUILD_NUMBER}"
+                        sh "docker push beddi006/backend:${env.BUILD_NUMBER}"
                     }
                 }
             }
@@ -29,7 +28,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploy the application...'
-                // Ajoutez vos étapes de déploiement ici
             }
         }
     }
