@@ -1,31 +1,36 @@
 pipeline {
     agent any
+    
     environment {
         DOCKER_IMAGE = "beddi006/backend:${env.BUILD_NUMBER}"
-        DOCKERHUB_CREDENTIALS= credentials('dockerhub')     
-
     }
 
-   stage('Building Image') {
-            steps{
+    stages {
+        stage('Build') {
+            steps {
                 script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    // Construire l'image Docker et taguer avec BUILD_NUMBER
+                    sh "docker build -t ${DOCKER_IMAGE} ./backend/"
                 }
             }
         }
-        stage('Push Image') {
-            steps{
+        
+        stage('Push image') {
+            steps {
                 script {
-                    docker.withRegistry( '', DOCKERHUB_CREDENTIALS ) {
-                    dockerImage.push()
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                        // Pousser l'image Docker vers Docker Hub
+                        sh "docker push ${DOCKER_IMAGE}"
                     }
                 }
             }
-        
         }
+        
         stage('Deploy') {
             steps {
                 echo 'Deploy the application...'
+                // Ajoutez vos étapes de déploiement ici
             }
         }
     }
+}
