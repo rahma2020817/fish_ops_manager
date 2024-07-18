@@ -1,6 +1,5 @@
 pipeline {
     agent any
-    def app
     environment {
         DOCKER_IMAGE = "beddi006/backend:${env.BUILD_NUMBER}"
         DOCKERHUB_CREDENTIALS= credentials('dockerhub')     
