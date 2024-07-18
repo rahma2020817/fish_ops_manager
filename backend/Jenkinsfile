@@ -6,40 +6,26 @@ pipeline {
 
     }
 
-    stages {
-        stage('Build') {
-            steps {
+   stage('Building Image') {
+            steps{
                 script {
-                    // app = docker.build("beddi006/backend", "-f ./backend/")
-                    sh "docker build -t ${DOCKER_IMAGE} ./backend/"
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 }
             }
         }
-        
-        stage('Push image') {
-            steps {
+        stage('Push Image') {
+            steps{
                 script {
-                   // // docker.withRegistry('https://docker.io', 'dockerhub') {
-                   // //      sh "docker tag ${DOCKER_IMAGE} beddi006/backend:${env.BUILD_NUMBER}"
-                   // //      sh "docker push beddi006/backend:${env.BUILD_NUMBER}"
-                   // //  }
-                   //  withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                   //    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                   //    sh 'docker push shanem/spring-petclinic:latest'
-                   //  }
-                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW '
-                    sh 'echo $DOCKERHUB_CREDENTIALS_USR '
-                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    sh "docker tag ${DOCKER_IMAGE} beddi006/backend:${env.BUILD_NUMBER}"
-                    sh "docker push beddi006/backend:${env.BUILD_NUMBER}"
+                    docker.withRegistry( '', DOCKERHUB_CREDENTIALS ) {
+                    dockerImage.push()
+                    }
                 }
             }
-        }
         
+        }
         stage('Deploy') {
             steps {
                 echo 'Deploy the application...'
             }
         }
     }
-}
