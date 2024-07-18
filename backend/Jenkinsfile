@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                        sh "docker tag ${DOCKER_IMAGE} beddi006/${DOCKER_IMAGE}"
+                        sh "docker tag ${DOCKER_IMAGE} /${DOCKER_IMAGE}"
                         sh "docker push ${DOCKER_IMAGE}"
                     }
                 }
