@@ -17,7 +17,7 @@ pipeline {
         stage('Push image') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                    docker.withRegistry('https://registry.hub.docker.io', 'dockerhub') {
                         sh "docker tag ${DOCKER_IMAGE} beddi006/backend:${env.BUILD_NUMBER}"
                         sh "docker push beddi006/backend:${env.BUILD_NUMBER}"
                     }
