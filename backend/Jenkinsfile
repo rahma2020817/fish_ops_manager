@@ -1,21 +1,29 @@
 pipeline {
-    def app
     agent any
+    
     stages {
         stage('Build') {
             steps {
-               docker build -t beddi006/backend:${env.BUILD_NUMBER} ./backend/
+                script {
+                    sh 'docker build -t backend:${env.BUILD_NUMBER} ./backend/'
+                }
             }
         }
+        
         stage('Push image') {
-            
-            docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                docker push beddi006/backend:${env.BUILD_NUMBER}
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                        docker.image("backend:${env.BUILD_NUMBER}").push()
+                    }
+                }
             }
         }
+        
         stage('Deploy') {
             steps {
                 echo 'Deploy the application...'
+                // Ajoutez vos étapes de déploiement ici
             }
         }
     }
