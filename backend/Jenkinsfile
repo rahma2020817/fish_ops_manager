@@ -1,12 +1,16 @@
 pipeline {
     agent any
     
+    environment {
+        DOCKER_IMAGE = "beddi006/backend:${env.BUILD_NUMBER}"
+    }
+
     stages {
         stage('Build') {
             steps {
                 script {
                     // Construire l'image Docker et taguer avec BUILD_NUMBER
-                    sh 'docker build -t backend:$BUILD_NUMBER ./backend/'
+                    sh "docker build -t ${DOCKER_IMAGE} ./backend/"
                 }
             }
         }
@@ -16,7 +20,7 @@ pipeline {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
                         // Pousser l'image Docker vers Docker Hub
-                        sh 'docker push beddi006/backend:$BUILD_NUMBER'
+                        sh "docker push ${DOCKER_IMAGE}"
                     }
                 }
             }
