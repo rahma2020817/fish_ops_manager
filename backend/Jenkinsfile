@@ -17,7 +17,8 @@ pipeline {
         stage('Push image') {
             steps {
                 script {
-                    docker.withRegistry('https://registry-1.docker.io/v2/', 'dockerhub') {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                        sh "echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin"
                         sh "docker tag ${DOCKER_IMAGE} beddi006/backend:${env.BUILD_NUMBER}"
                         sh "docker push beddi006/backend:${env.BUILD_NUMBER}"
                     }
