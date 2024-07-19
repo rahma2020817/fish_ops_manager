@@ -1,41 +1,29 @@
 pipeline {
     agent any
-    
+
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
         DOCKER_IMAGE = "beddi006/backend:${env.BUILD_NUMBER}"
     }
 
     stages {
-        stage('Build') {
+        stage('Docker Login') {
             steps {
-                script {
-                    // Construire l'image Docker et taguer avec BUILD_NUMBER
-                    sh "docker build -t ${DOCKER_IMAGE} ./backend/"
-                }
+                // Ajouter --password-stdin pour exécuter la commande docker login de manière non interactive
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
-         stage('Login to DockerHub') {
+        stage('Build & Push Docker Image with Ansible') {
             steps {
-                script {
-                    // Se connecter à DockerHub pour vérifier les informations d'identification
-                    sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
-                }
+                sh """
+                cd backend
+                ansible-playbook ansible-playbook.yml -e BUILD_NUMBER=${env.BUILD_NUMBER}
+                """
             }
         }
-        stage('Push image') {
-            steps {
-                script {
-                        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub'){
-                            sh "docker push ${DOCKER_IMAGE}"
-                    }
-                }
-            }
-        }
-        
         stage('Deploy') {
             steps {
-                echo 'Deploy the application...'
+                echo 'Déployer l\'application...'
                 // Ajoutez vos étapes de déploiement ici
             }
         }
