@@ -14,15 +14,19 @@ pipeline {
                 }
             }
         }
-        stage('Push image') {
+     stage('Push image') {
             steps {
                 script {
-                        docker.withRegistry('https://registry.hub.docker.com', 'dokerhub'){
+                    withCredentials([usernamePassword(credentialsId: 'dokerhub', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
+                        docker.withRegistry('https://registry.hub.docker.com', 'dokerhub') {
+                            sh "echo $PASSWORD | docker login -u $USER --password-stdin"
                             sh "docker push ${DOCKER_IMAGE}"
+                        }
                     }
                 }
             }
         }
+
         
         stage('Deploy') {
             steps {
