@@ -7,6 +7,14 @@ pipeline {
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    echo "Checking out code from repository"
+                }
+                checkout scm
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 script {
@@ -43,7 +51,12 @@ pipeline {
             echo "Docker image successfully pushed: beddi006/backend:${env.BUILD_NUMBER}"
         }
         failure {
-            echo "Pipeline failed."
+            script {
+                echo "Pipeline failed. Debugging information:"
+                sh 'docker --version'
+                sh 'docker images'
+                sh 'docker ps -a'
+            }
         }
     }
 }
