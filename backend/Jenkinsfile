@@ -15,10 +15,16 @@ pipeline {
         }
         stage('Build & Push Docker Image with Ansible') {
             steps {
-                sh """
-                cd ./
-                ansible-playbook ansible-playbook.yml -e BUILD_NUMBER=${env.BUILD_NUMBER}
-                """
+                script {
+                    // Assurez-vous que nous sommes dans le bon répertoire
+                    dir('backend') {
+                        sh """
+                        pwd
+                        ls -l
+                        ansible-playbook ansible-playbook.yml -e BUILD_NUMBER=${env.BUILD_NUMBER}
+                        """
+                    }
+                }
             }
         }
         stage('Deploy') {
