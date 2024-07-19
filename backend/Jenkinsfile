@@ -4,24 +4,23 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
         DOCKER_IMAGE = "beddi006/backend:${env.BUILD_NUMBER}"
+        ANSIBLE_PATH = "/usr/bin/ansible-playbook" // Mettez à jour avec le chemin correct
     }
 
     stages {
         stage('Docker Login') {
             steps {
-                // Ajouter --password-stdin pour exécuter la commande docker login de manière non interactive
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
         stage('Build & Push Docker Image with Ansible') {
             steps {
                 script {
-                    // Assurez-vous que nous sommes dans le bon répertoire
                     dir('backend') {
                         sh """
                         pwd
                         ls -l
-                        ansible-playbook ansible-playbook.yml -e BUILD_NUMBER=${env.BUILD_NUMBER}
+                        ${ANSIBLE_PATH} ansible-playbook.yml -e BUILD_NUMBER=${env.BUILD_NUMBER}
                         """
                     }
                 }
@@ -30,7 +29,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Déployer l\'application...'
-                // Ajoutez vos étapes de déploiement ici
             }
         }
     }
