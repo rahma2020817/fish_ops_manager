@@ -18,7 +18,9 @@ pipeline {
         stage('Push image') {
             steps {
                 script {
+                    sh "whoami"
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                        sh "whoami"
                         sh "docker push ${DOCKER_IMAGE}"
                     }
                 }
