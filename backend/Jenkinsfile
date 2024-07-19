@@ -16,7 +16,7 @@ pipeline {
         stage('Build & Push Docker Image with Ansible') {
             steps {
                 sh """
-                cd backend/
+                cd backend
                 ansible-playbook ansible-playbook.yml -e BUILD_NUMBER=${env.BUILD_NUMBER}
                 """
             }
