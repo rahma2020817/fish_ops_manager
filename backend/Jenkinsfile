@@ -51,7 +51,7 @@ pipeline {
             echo "Docker image successfully pushed: beddi006/backend:${env.BUILD_NUMBER}"
         }
         failure {
-            script {
+            node {
                 echo "Pipeline failed. Debugging information:"
                 try {
                     sh 'docker --version'
