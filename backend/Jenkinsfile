@@ -1,34 +1,38 @@
 pipeline {
     agent any
-
+    
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub') // Assurez-vous que ces identifiants sont correctement configurés dans Jenkins
         DOCKER_IMAGE = "beddi006/backend:${env.BUILD_NUMBER}"
-        ANSIBLE_PATH = "/usr/bin/ansible-playbook" // Mettez à jour avec le chemin correct
     }
 
     stages {
-        stage('Docker Login') {
-            steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-            }
-        }
-        stage('Build & Push Docker Image with Ansible') {
+        stage('Build Docker Image') {
             steps {
                 script {
-                    dir('backend') {
-                        sh """
-                        pwd
-                        ls -l
-                        ${ANSIBLE_PATH} ansible-playbook.yml -e BUILD_NUMBER=${env.BUILD_NUMBER}
-                        """
-                    }
+                    sh "docker build -t ${DOCKER_IMAGE} ./backend/"
                 }
             }
         }
-        stage('Deploy') {
+
+        stage('Login to DockerHub') {
             steps {
-                echo 'Déployer l\'application...'
+                script {
+                    // Connexion à DockerHub
+                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                }
+            }
+        }
+
+        stage('Tag and Push Docker Image') {
+            steps {
+                script {
+                    // Taguer l'image
+                    sh "docker tag ${DOCKER_IMAGE} beddi006/backend:${env.BUILD_NUMBER}"
+                    
+                    // Pousser l'image sur DockerHub
+                    sh "docker push beddi006/backend:${env.BUILD_NUMBER}"
+                }
             }
         }
     }
