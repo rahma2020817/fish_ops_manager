@@ -53,9 +53,13 @@ pipeline {
         failure {
             script {
                 echo "Pipeline failed. Debugging information:"
-                sh 'docker --version'
-                sh 'docker images'
-                sh 'docker ps -a'
+                try {
+                    sh 'docker --version'
+                    sh 'docker images'
+                    sh 'docker ps -a'
+                } catch (Exception e) {
+                    echo "Failed to retrieve Docker debug information: ${e.getMessage()}"
+                }
             }
         }
     }
