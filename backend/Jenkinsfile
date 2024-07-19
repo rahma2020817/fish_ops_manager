@@ -2,65 +2,34 @@ pipeline {
     agent any
     
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub') // Ensure these credentials are correctly configured in Jenkins
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
         DOCKER_IMAGE = "beddi006/backend:${env.BUILD_NUMBER}"
     }
 
     stages {
-        stage('Checkout') {
+        stage('Build') {
             steps {
                 script {
-                    echo "Checking out code from repository"
-                }
-                checkout scm
-            }
-        }
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    echo "Building Docker image: ${DOCKER_IMAGE}"
+                    // Construire l'image Docker et taguer avec BUILD_NUMBER
                     sh "docker build -t ${DOCKER_IMAGE} ./backend/"
                 }
             }
         }
-
-        stage('Login to DockerHub') {
+        stage('Push image') {
             steps {
                 script {
-                    echo "Logging in to DockerHub"
-                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub'){
+                            sh "docker push ${DOCKER_IMAGE}"
+                    }
                 }
             }
         }
-
-        stage('Tag and Push Docker Image') {
+        
+        stage('Deploy') {
             steps {
-                script {
-                    echo "Tagging Docker image: ${DOCKER_IMAGE}"
-                    sh "docker tag ${DOCKER_IMAGE} beddi006/backend:${env.BUILD_NUMBER}"
-                    
-                    echo "Pushing Docker image: beddi006/backend:${env.BUILD_NUMBER}"
-                    sh "docker push beddi006/backend:${env.BUILD_NUMBER}"
-                }
+                echo 'Deploy the application...'
+                // Ajoutez vos étapes de déploiement ici
             }
         }
     }
-    
-    post {
-        success {
-            echo "Docker image successfully pushed: beddi006/backend:${env.BUILD_NUMBER}"
-        }
-        failure {
-            node {
-                echo "Pipeline failed. Debugging information:"
-                try {
-                    sh 'docker --version'
-                    sh 'docker images'
-                    sh 'docker ps -a'
-                } catch (Exception e) {
-                    echo "Failed to retrieve Docker debug information: ${e.getMessage()}"
-                }
-            }
-        }
-    }
-}
+} 
