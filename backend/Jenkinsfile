@@ -9,28 +9,30 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Build the Docker image and tag it with BUILD_NUMBER
+                    // Construire l'image Docker et taguer avec BUILD_NUMBER
                     sh "docker build -t ${DOCKER_IMAGE} ./backend/"
                 }
             }
         }
-        stage('Push image') {
+     stage('Push image') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
-                        // Log in to Docker Hub using the provided credentials
-                        sh "echo $PASSWORD | docker login -u $USER --password-stdin"
-                        // Push the Docker image
-                        sh "docker push ${DOCKER_IMAGE}"
+                    withCredentials([usernamePassword(credentialsId: 'ID', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
+                        docker.withRegistry('https://registry.hub.docker.com', 'dokerhub') {
+                            sh "echo $PASSWORD | docker login -u $USER --password-stdin"
+                            sh "docker push ${DOCKER_IMAGE}"
+                        }
                     }
                 }
             }
         }
+
+        
         stage('Deploy') {
             steps {
                 echo 'Deploy the application...'
-                // Add your deployment steps here
+                // Ajoutez vos étapes de déploiement ici
             }
         }
     }
-}
+} 
