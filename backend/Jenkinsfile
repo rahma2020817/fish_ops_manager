@@ -17,7 +17,7 @@ pipeline {
      stage('Push image') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'ID', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
+                    withCredentials([usernamePassword(credentialsId: 'dokerhub', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
                         docker.withRegistry('https://registry.hub.docker.com', 'dokerhub') {
                             sh "echo $PASSWORD | docker login -u $USER --password-stdin"
                             sh "docker push ${DOCKER_IMAGE}"
