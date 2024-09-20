@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: backend
-        image: beddi006/backend:13
+        image: beddi006/backend:14
         ports:
         - containerPort: 80
