@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         DOCKER_IMAGE = "beddi006/backend:${env.BUILD_NUMBER}"
-        KUBECONFIG = credentials('your-kubeconfig-credential-id') // Remplace par l'ID de tes credentials Kubeconfig
+        KUBECONFIG = credentials('kubeconfig') // Remplace par l'ID de tes credentials Kubeconfig
     }
 
     stages {
@@ -30,6 +30,7 @@ pipeline {
         stage('Deploy to Kubernetes with ArgoCD') {
             steps {
                 script {
+                    // Synchroniser l'application avec ArgoCD
                     sh "argocd app sync backend" // Remplace 'backend' par le nom de ton application ArgoCD
                 }
             }
