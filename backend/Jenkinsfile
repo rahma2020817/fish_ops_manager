@@ -31,7 +31,8 @@ pipeline {
             steps {
                 script {
                     // Synchroniser l'application avec ArgoCD
-                    sh "argocd app sync backend" // Remplace 'backend' par le nom de ton application ArgoCD
+                    // Ajout de l'option --insecure pour contourner l'erreur de certificat
+                    sh "argocd app sync backend --insecure" // Remplace 'backend' par le nom de ton application ArgoCD
                 }
             }
         }
