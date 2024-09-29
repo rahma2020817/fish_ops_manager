@@ -30,8 +30,9 @@ pipeline {
         
         stage('Deploy') {
             steps {
-                echo 'Deploy the application...'
-                // Ajoutez vos étapes de déploiement ici
+                script {
+                    sh "kubectl set image deployment/backend-deployment backend=${DOCKER_IMAGE} -n backend"
+                }
             }
         }
     }
